@@ -35,6 +35,7 @@ fs-image: tools user fs
 
 clean:
 	-rm **/*.o **/*.b
+	-$(MAKE) --directory=user clean
 	-$(MAKE) --directory=tools clean
 	-$(MAKE) --directory=fs clean
 	-rm -r ${TARGET}
