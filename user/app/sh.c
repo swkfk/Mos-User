@@ -87,13 +87,16 @@ int parsecmd(char **argv, int *rightpipe) {
 				exit();
 			}
 			// Open 't' for reading, dup it onto fd 0, and then close the original fd.
+			// If the 'open' function encounters an error,
+			// utilize 'debugf' to print relevant messages,
+			// and subsequently terminate the process using 'exit'.
 			/* Exercise 6.5: Your code here. (1/3) */
-			if((fd = open(t, O_RDONLY)) < 0) {
-				debugf("failed to open %s\n");
+			if ((fd = open(t, O_RDONLY)) < 0) {
+				debugf("fs error: no such file or directory: %s\n", t);
 				exit();
 			}
-			if((r = dup(fd, 0)) < 0) {
-				debugf("failed to duplicate file to <stdin>\n");
+			if ((r = dup(fd, 0)) < 0) {
+				debugf("fs error: cannot dup the file %s to <stdin>\n", t);
 				exit();
 			}
 			close(fd);
@@ -103,14 +106,18 @@ int parsecmd(char **argv, int *rightpipe) {
 				debugf("syntax error: > not followed by word\n");
 				exit();
 			}
-			// Open 't' for writing, dup it onto fd 1, and then close the original fd.
+			// Open 't' for writing, create it if not exist and trunc it if exist, dup
+			// it onto fd 1, and then close the original fd.
+			// If the 'open' function encounters an error,
+			// utilize 'debugf' to print relevant messages,
+			// and subsequently terminate the process using 'exit'.
 			/* Exercise 6.5: Your code here. (2/3) */
-			if((fd = open(t, O_WRONLY)) < 0) {
-				debugf("failed to open %s\n");
+			if ((fd = open(t, O_WRONLY | O_CREAT | O_TRUNC)) < 0) {
+				debugf("fs error: failed to open: `%s` for %d\n", t, fd);
 				exit();
 			}
-			if((r = dup(fd, 1)) < 0) {
-				debugf("failed to duplicate file to <stdout>\n");
+			if ((r = dup(fd, 1)) < 0) {
+				debugf("fs error: cannot dup the file `%s` to <stdout> for %d\n", t, fd);
 				exit();
 			}
 			close(fd);
@@ -133,16 +140,18 @@ int parsecmd(char **argv, int *rightpipe) {
 			 */
 			int p[2];
 			/* Exercise 6.5: Your code here. (3/3) */
-			if((r = pipe(p)) < 0) {
-				debugf("failed to create pipe\n");
+			if ((r = pipe(p)) < 0) {
+				debugf("fs error: cannot create a pipe\n");
 				exit();
 			}
-			if((*rightpipe = fork()) == 0) {
+			if ((*rightpipe = fork()) == 0) {
+				// Child, Right
 				dup(p[0], 0);
 				close(p[0]);
 				close(p[1]);
 				return parsecmd(argv, rightpipe);
 			} else {
+				// Parent, Left
 				dup(p[1], 1);
 				close(p[1]);
 				close(p[0]);
@@ -181,26 +190,26 @@ void runcmd(char *s) {
 
 void readline(char *buf, u_int n) {
 	int r;
-	for (int i = 0; i < n; i++) {
-		if ((r = read(0, buf + i, 1)) != 1) {
+	int size = 0;
+	char temp_char;
+	while (size < n) {
+		if ((r = read(0, &temp_char, 1)) != 1) {
 			if (r < 0) {
 				debugf("read error: %d\n", r);
 			}
 			exit();
 		}
-		if (buf[i] == '\b' || buf[i] == 0x7f) {
-			if (i > 0) {
-				i -= 2;
-			} else {
-				i = -1;
+		if (temp_char == '\b' || temp_char == 0x7f) {
+			if (size == 0) {
+				continue;
 			}
-			if (buf[i] != '\b') {
-				printf("\b");
-			}
-		}
-		if (buf[i] == '\r' || buf[i] == '\n') {
-			buf[i] = 0;
+			size--;
+			printf("\b \b");
+		} else if (temp_char == '\n' || temp_char == '\r') {
+			buf[size] = 0;
 			return;
+		} else {
+			buf[size++] = temp_char;
 		}
 	}
 	debugf("line too long\n");
@@ -213,7 +222,7 @@ void readline(char *buf, u_int n) {
 char buf[1024];
 
 void usage(void) {
-	debugf("usage: sh [-dix] [command-file]\n");
+	printf("usage: sh [-ix] [script-file]\n");
 	exit();
 }
 
@@ -221,11 +230,11 @@ int main(int argc, char **argv) {
 	int r;
 	int interactive = iscons(0);
 	int echocmds = 0;
-	debugf("\n:::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::\n");
-	debugf("::                                                         ::\n");
-	debugf("::                     MOS Shell 2023                      ::\n");
-	debugf("::                                                         ::\n");
-	debugf(":::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::\n");
+	printf("\n:::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::\n");
+	printf("::                                                         ::\n");
+	printf("::                     MOS Shell 2024                      ::\n");
+	printf("::                                                         ::\n");
+	printf(":::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::\n");
 	ARGBEGIN {
 	case 'i':
 		interactive = 1;
@@ -244,7 +253,7 @@ int main(int argc, char **argv) {
 	if (argc == 1) {
 		close(0);
 		if ((r = open(argv[0], O_RDONLY)) < 0) {
-			user_panic("open %s: %d", argv[1], r);
+			user_panic("open %s: %d", argv[0], r);
 		}
 		user_assert(r == 0);
 	}
