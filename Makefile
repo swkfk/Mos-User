@@ -2,7 +2,11 @@ include include.mk
 
 LIB_SRC = $(wildcard lib/*.c)
 SHARE_LIB_OBJ = $(patsubst %.c,%.o,${LIB_SRC})
-TARGET = target/user
+ifneq ($(MOS_USER),)
+	TARGET = ../target/user
+else
+	TARGET = target/user
+endif
 
 export CC CFLAGS LD LDFLAGS SHARE_LIB_OBJ TARGET
 
