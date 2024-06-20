@@ -273,7 +273,7 @@ void read_super(void) {
 		user_panic("file system is too large");
 	}
 
-	debugf("superblock is good\n");
+	// debugf("superblock is good\n");
 }
 
 // Overview:
@@ -305,7 +305,7 @@ void read_bitmap(void) {
 		user_assert(!block_is_free(i + 2));
 	}
 
-	debugf("read_bitmap is good\n");
+	// debugf("read_bitmap is good\n");
 }
 
 // Overview:

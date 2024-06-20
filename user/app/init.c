@@ -18,29 +18,30 @@ int sum(char *s, int n) {
 }
 
 int main(int argc, char **argv) {
-	int i, r, x, want;
+	int r;
+	// int i, r, x, want;
 
-	debugf("init: running\n");
+	// debugf("init: running\n");
 
-	want = 0xf989e;
-	if ((x = sum((char *)&data, sizeof data)) != want) {
-		debugf("init: data is not initialized: got sum %08x wanted %08x\n", x, want);
-	} else {
-		debugf("init: data seems okay\n");
-	}
-	if ((x = sum(bss, sizeof bss)) != 0) {
-		debugf("bss is not initialized: wanted sum 0 got %08x\n", x);
-	} else {
-		debugf("init: bss seems okay\n");
-	}
+	// want = 0xf989e;
+	// if ((x = sum((char *)&data, sizeof data)) != want) {
+	// 	debugf("init: data is not initialized: got sum %08x wanted %08x\n", x, want);
+	// } else {
+	// 	debugf("init: data seems okay\n");
+	// }
+	// if ((x = sum(bss, sizeof bss)) != 0) {
+	// 	debugf("bss is not initialized: wanted sum 0 got %08x\n", x);
+	// } else {
+	// 	debugf("init: bss seems okay\n");
+	// }
 
-	debugf("init: args:");
-	for (i = 0; i < argc; i++) {
-		debugf(" '%s'", argv[i]);
-	}
-	debugf("\n");
+	// debugf("init: args:");
+	// for (i = 0; i < argc; i++) {
+	// 	debugf(" '%s'", argv[i]);
+	// }
+	// debugf("\n");
 
-	debugf("init: running sh\n");
+	// debugf("init: running sh\n");
 
 	// stdin should be 0, because no file descriptors are open yet
 	if ((r = opencons()) != 0) {
@@ -52,10 +53,10 @@ int main(int argc, char **argv) {
 	}
 
 	while (1) {
-		debugf("init: starting sh\n");
+		// debugf("init: starting sh\n");
 		r = spawnl("sh.b", "sh", NULL);
 		if (r < 0) {
-			debugf("init: spawn sh: %d\n", r);
+			// debugf("init: spawn sh: %d\n", r);
 			return r;
 		}
 		wait(r);
