@@ -40,6 +40,7 @@ void lsdir(char *path, char *prefix) {
 }
 
 void ls1(char *prefix, u_int isdir, u_int size, char *name) {
+    static int count = 0;
 	char *sep;
 
 	if (flag['l']) {
@@ -53,11 +54,20 @@ void ls1(char *prefix, u_int isdir, u_int size, char *name) {
 		}
 		printf("%s%s", prefix, sep);
 	}
-	printf("%s", name);
+	if (!flag['l']) {
+		printf("%18s", name);
+	} else {
+		printf("%s", name);
+	}
 	if (flag['F'] && isdir) {
 		printf("/");
 	}
-	printf(" ");
+	count++;
+	if (count % 4 == 0 || flag['l']){
+		printf("\n");
+	} else {
+		printf("\t");
+	}
 }
 
 void usage(void) {
