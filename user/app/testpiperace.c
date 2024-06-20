@@ -4,7 +4,7 @@ int main() {
 	int p[2], r, pid, i, max;
 	void *va;
 	struct Fd *fd;
-	volatile struct Env *kid;
+	const volatile struct Env *kid;
 
 	debugf("testing for dup race...\n");
 	if ((r = pipe(p)) < 0) {
