@@ -1,3 +1,5 @@
+ENDIAN         := EL
+
 HOST_CC        := cc
 HOST_CFLAGS    += --std=gnu99 -O2 -Wall
 HOST_ENDIAN    := $(shell lscpu | grep -iq 'little endian' && echo EL || echo EB)
