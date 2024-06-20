@@ -11,21 +11,23 @@ export CC CFLAGS LD LDFLAGS SHARE_LIB_OBJ TARGET
 all: mkdir fs-image
 
 mkdir:
-	mkdir -p ${TARGET}
+	@mkdir -p ${TARGET}
 
 fs:
-	$(MAKE) --directory=$@
+	@$(MAKE) --directory=$@
 
 tools:
-	$(MAKE) --directory=$@
+	@$(MAKE) --directory=$@
 
 user:
-	$(MAKE) --directory=$@
+	@$(MAKE) --directory=$@
 
 fs-image: tools user fs
-	$(MAKE) --directory=fs image fs-files="$(addprefix ../, $(fs-files))"
-	cp user/app/icode.b ${TARGET}/
-	cp fs/serv.b ${TARGET}/
+	@$(MAKE) --directory=fs image fs-files="$(addprefix ../, $(fs-files))"
+	@echo [CP] icode.b
+	@cp user/app/icode.b ${TARGET}/
+	@echo [CP] serv.b
+	@cp fs/serv.b ${TARGET}/
 
 clean:
 	-rm **/*.o **/*.b

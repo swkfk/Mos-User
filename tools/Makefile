@@ -10,7 +10,8 @@ endif
 all: fsformat
 
 %: %.c
-	$(HOST_CC) $(HOST_CFLAGS) -o $@ $^
+	@echo [CC] $@
+	@$(HOST_CC) $(HOST_CFLAGS) -o $@ $^
 
 clean:
 	rm fsformat

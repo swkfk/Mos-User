@@ -325,10 +325,10 @@ int main(int argc, char **argv) {
 		int r = stat(name, &stat_buf);
 		assert(r == 0);
 		if (S_ISDIR(stat_buf.st_mode)) {
-			printf("writing directory '%s' recursively into disk\n", name);
+			printf("[FS-fmt] dir '%s'\n", name);
 			write_directory(&super.s_root, name);
 		} else if (S_ISREG(stat_buf.st_mode)) {
-			printf("writing regular file '%s' into disk\n", name);
+			printf("[FS-fmt] reg '%s'\n", name);
 			write_file(&super.s_root, name);
 		} else {
 			fprintf(stderr, "'%s' has illegal file mode %o\n", name, stat_buf.st_mode);

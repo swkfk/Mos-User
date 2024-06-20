@@ -6,13 +6,16 @@ USER_LDS = user.lds
 all: ${APP_EXE}
 
 %.b: %.o $(LIB_OBJ) $(SHARE_LIB)
-	$(LD) -o $@ $(LDFLAGS) -T $(USER_LDS) $^
+	@echo [mips-LD] $@
+	@$(LD) -o $@ $(LDFLAGS) -T $(USER_LDS) $^
 
 %.o: %.c
-	$(CC) $(CFLAGS) $(INCLUDES) -c -o $@ $<
+	@echo [mips-CC] $@
+	@$(CC) $(CFLAGS) $(INCLUDES) -c -o $@ $<
 
 %.o: %.S
-	$(CC) $(CFLAGS) $(INCLUDES) -c -o $@ $<
+	@echo [mips-CC] $@
+	@$(CC) $(CFLAGS) $(INCLUDES) -c -o $@ $<
 
 clean:
 	rm -rf **/*.o **/*.b
