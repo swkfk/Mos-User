@@ -262,7 +262,7 @@ int main(int argc, char **argv) {
 	}
 	for (;;) {
 		if (interactive) {
-			printf("\n\033[38;5;80m$ \033[0m");
+			printf("\n\033[38;5;38m$ ");
 		}
 		readline(buf, sizeof buf);
 
@@ -276,6 +276,7 @@ int main(int argc, char **argv) {
 			user_panic("fork: %d", r);
 		}
 		if (r == 0) {
+			printf("\033[0m");
 			runcmd(buf);
 			exit();
 		} else {
