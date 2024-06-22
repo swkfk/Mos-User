@@ -394,7 +394,9 @@ void serve(void) {
 int main() {
 	user_assert(sizeof(struct File) == FILE_STRUCT_SIZE);
 
-	// debugf("FS is running\n");
+#ifdef MOS_DEBUG
+	debugf("FS is running\n");
+#endif
 
 	serve_init();
 	fs_init();

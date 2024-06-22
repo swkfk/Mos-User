@@ -19,30 +19,31 @@ int sum(char *s, int n) {
 
 int main(int argc, char **argv) {
 	int r;
-	// int i, r, x, want;
+#ifdef MOS_DEBUG
+	int i, x, want;
 
-	// debugf("init: running\n");
+	debugf("init: running\n");
 
-	// want = 0xf989e;
-	// if ((x = sum((char *)&data, sizeof data)) != want) {
-	// 	debugf("init: data is not initialized: got sum %08x wanted %08x\n", x, want);
-	// } else {
-	// 	debugf("init: data seems okay\n");
-	// }
-	// if ((x = sum(bss, sizeof bss)) != 0) {
-	// 	debugf("bss is not initialized: wanted sum 0 got %08x\n", x);
-	// } else {
-	// 	debugf("init: bss seems okay\n");
-	// }
+	want = 0xf989e;
+	if ((x = sum((char *)&data, sizeof data)) != want) {
+		debugf("init: data is not initialized: got sum %08x wanted %08x\n", x, want);
+	} else {
+		debugf("init: data seems okay\n");
+	}
+	if ((x = sum(bss, sizeof bss)) != 0) {
+		debugf("bss is not initialized: wanted sum 0 got %08x\n", x);
+	} else {
+		debugf("init: bss seems okay\n");
+	}
 
-	// debugf("init: args:");
-	// for (i = 0; i < argc; i++) {
-	// 	debugf(" '%s'", argv[i]);
-	// }
-	// debugf("\n");
+	debugf("init: args:");
+	for (i = 0; i < argc; i++) {
+		debugf(" '%s'", argv[i]);
+	}
+	debugf("\n");
 
-	// debugf("init: running sh\n");
-
+	debugf("init: running sh\n");
+#endif
 	// stdin should be 0, because no file descriptors are open yet
 	if ((r = opencons()) != 0) {
 		user_panic("opencons: %d", r);
