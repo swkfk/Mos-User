@@ -71,6 +71,11 @@ int syscall_read_dev(void *va, u_int dev, u_int len);
 int syscall_create_shared_pool(void *va, u_int len, u_int perm);
 int syscall_bind_shared_pool(void *va, u_int id, u_int perm);
 
+// memory_pool.c
+int create_mem_pool(void *va, u_int len, u_int writeable);
+int bind_mem_pool(void *va, u_int id, u_int writeable);
+int try_bind_mem_pool(void *va, u_int id, u_int writeable);
+
 // ipc.c
 void ipc_send(u_int whom, u_int val, const void *srcva, u_int perm);
 u_int ipc_recv(u_int *whom, void *dstva, u_int *perm);

@@ -65,6 +65,9 @@
 // Shared memmory. Reserved for software, used by fork.
 #define PTE_LIBRARY 0x0002
 
+// Memory pool memory. Reserved for software, used by memory pool.
+#define PTE_POOL 0x0004
+
 // Memory segments (32-bit kernel mode addresses)
 #define KUSEG 0x00000000U
 #define KSEG0 0x80000000U
