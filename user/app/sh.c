@@ -269,6 +269,15 @@ int main(int argc, char **argv) {
 		if (buf[0] == '#') {
 			continue;
 		}
+
+		for (char *p = buf; *p; p++) {
+			if (*p != ' ' || *p != '\t') {
+				goto do_run_cmd;
+			}
+		}
+		continue;
+	do_run_cmd:
+
 		if (echocmds) {
 			printf("# %s\n", buf);
 		}
