@@ -70,11 +70,15 @@ int syscall_write_dev(void *va, u_int dev, u_int len);
 int syscall_read_dev(void *va, u_int dev, u_int len);
 int syscall_create_shared_pool(void *va, u_int len, u_int perm);
 int syscall_bind_shared_pool(void *va, u_int id, u_int perm);
+int syscall_lock(u_int id);
+int syscall_unlock(u_int id);
 
 // memory_pool.c
 int create_mem_pool(void *va, u_int len, u_int writeable);
 int bind_mem_pool(void *va, u_int id, u_int writeable);
 int try_bind_mem_pool(void *va, u_int id, u_int writeable);
+void mem_pool_lock(u_int id);
+int mem_pool_unlock(u_int id);
 
 // ipc.c
 void ipc_send(u_int whom, u_int val, const void *srcva, u_int perm);

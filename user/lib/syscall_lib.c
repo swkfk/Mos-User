@@ -82,3 +82,11 @@ int syscall_create_shared_pool(void *va, u_int len, u_int perm) {
 int syscall_bind_shared_pool(void *va, u_int id, u_int perm) {
 	return msyscall(SYS_bind_shared_pool, va, id, perm);
 }
+
+int syscall_lock(u_int id) {
+	return msyscall(SYS_lock, id);
+}
+
+int syscall_unlock(u_int id) {
+	return msyscall(SYS_unlock, id);
+}

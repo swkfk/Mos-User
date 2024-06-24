@@ -53,6 +53,12 @@
 // The pool is not bind
 #define E_POOL_NOT_BIND 16
 
+// Unlock a lock without being locked
+#define E_NO_LOCK 17
+
+// Unlock a lock which was locked by another env
+#define E_LOCK_BY_OTHERS 18
+
 /*
  * A quick wrapper around function calls to propagate errors.
  * Use this with caution, as it leaks resources we've acquired so far.

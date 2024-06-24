@@ -31,3 +31,13 @@ int try_bind_mem_pool(void *va, u_int id, u_int writeable) {
     }
     return r;
 }
+
+void mem_pool_lock(u_int id) {
+    int r;
+    while ((r = syscall_lock(id)) == 0)
+        syscall_yield();
+}
+
+int mem_pool_unlock(u_int id) {
+    return syscall_unlock(id);
+}
