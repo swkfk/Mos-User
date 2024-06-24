@@ -68,6 +68,8 @@ int syscall_ipc_recv(void *dstva);
 int syscall_cgetc(void);
 int syscall_write_dev(void *va, u_int dev, u_int len);
 int syscall_read_dev(void *va, u_int dev, u_int len);
+int syscall_create_shared_pool(void *va, u_int len, u_int perm);
+int syscall_bind_shared_pool(void *va, u_int id, u_int perm);
 
 // ipc.c
 void ipc_send(u_int whom, u_int val, const void *srcva, u_int perm);

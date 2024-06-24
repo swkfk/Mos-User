@@ -74,3 +74,11 @@ int syscall_read_dev(void *va, u_int dev, u_int size) {
 	/* Exercise 5.2: Your code here. (2/2) */
 	return msyscall(SYS_read_dev, va, dev, size);
 }
+
+int syscall_create_shared_pool(void *va, u_int len, u_int perm) {
+	return msyscall(SYS_create_shared_pool, va, len, perm);
+}
+
+int syscall_bind_shared_pool(void *va, u_int id, u_int perm) {
+	return msyscall(SYS_bind_shared_pool, va, id, perm);
+}

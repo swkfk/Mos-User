@@ -22,6 +22,8 @@ enum {
 	SYS_cgetc,
 	SYS_write_dev,
 	SYS_read_dev,
+	SYS_create_shared_pool,
+	SYS_bind_shared_pool,
 	MAX_SYSNO,
 };
 

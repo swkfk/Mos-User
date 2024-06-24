@@ -44,6 +44,15 @@
 // File not a valid executable
 #define E_NOT_EXEC 13
 
+// The target pool is not found
+#define E_POOL_NOT_FOUND 14
+
+// The pool has been bind
+#define E_POOL_DOUBLE_BIND 15
+
+// The pool is not bind
+#define E_POOL_NOT_BIND 16
+
 /*
  * A quick wrapper around function calls to propagate errors.
  * Use this with caution, as it leaks resources we've acquired so far.
