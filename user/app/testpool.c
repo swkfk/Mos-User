@@ -1,5 +1,6 @@
 #include <lib.h>
 
+// All of them are aligned
 char m[4096];
 char n[4096];
 int count[1024];

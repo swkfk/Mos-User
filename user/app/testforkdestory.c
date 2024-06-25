@@ -2,6 +2,9 @@
 
 int main(int argc, char **argv) {
     debugf("Unfortunately, this test will fail in this version's kernel.\n");
+    debugf("Press any key to continue...");
+    char temp;
+    read(0, &temp, 1);
     for (int i = 0; i < 100; i++) {
         int r = fork();
         if (r < 0) {
