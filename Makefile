@@ -37,5 +37,7 @@ clean:
 	-rm **/*.o **/*.b
 	-$(MAKE) --directory=user clean
 	-$(MAKE) --directory=tools clean
-	-$(MAKE) --directory=fs clean
+	# -$(MAKE) --directory=fs clean
+ifeq ($(MOS_USER),)
 	-rm -r ${TARGET}
+endif
