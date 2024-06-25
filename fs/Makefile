@@ -8,8 +8,10 @@ LIB_SHR_OBJ = $(addprefix ../,${SHARE_LIB_OBJ})
 LIB_OBJ = ${LIB_SRC_OBJ} ${LIB_ASM_OBJ} ${LIB_SHR_OBJ}
 APP_EXE := $(patsubst %.c,%.b,$(wildcard $(user_dir)/app/*.c))
 
+RTFILES = $(wildcard rootfs/*)
+
 FSLIB       := fs.o ide.o
-FSIMGFILES  := rootfs/motd rootfs/newmotd $(APP_EXE)
+FSIMGFILES  := $(RTFILES) $(APP_EXE)
 
 %.b: %.o $(LIB_OBJ) $(FSLIB)
 	@echo [mips-LD] $@
