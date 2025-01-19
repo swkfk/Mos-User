@@ -1,5 +1,12 @@
 ENDIAN         := EL
 
+ifeq ($(ARCH), mipsel)
+	CROSS_COMPILE  := mips-linux-gnu-
+	HINT           := MIPS
+else
+	$(error Unknown Arch: $(ARCH))
+endif
+
 QEMU           := qemu-system-mipsel
 CROSS_COMPILE  := mips-linux-gnu-
 CC             := $(CROSS_COMPILE)gcc

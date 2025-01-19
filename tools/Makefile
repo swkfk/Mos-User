@@ -12,7 +12,7 @@ endif
 all: fsformat
 
 %: %.c
-	@echo [CC] $@
+	@echo [HOST-CC] $@
 	@$(HOST_CC) $(HOST_CFLAGS) -o $@ $^
 
 clean:

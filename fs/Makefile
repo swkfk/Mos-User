@@ -14,15 +14,15 @@ FSLIB       := fs.o ide.o
 FSIMGFILES  := $(RTFILES) $(APP_EXE)
 
 %.b: %.o $(LIB_OBJ) $(FSLIB)
-	@echo [mips-LD] $@
+	@echo [$(HINT)-LD] $@
 	@$(LD) -o $@ $(LDFLAGS) -T $(user_dir)/user.lds $^
 
 %.o: %.c
-	@echo [mips-CC] $@
+	@echo [$(HINT)-CC] $@
 	@$(CC) $(CFLAGS) $(INCLUDES) -c -o $@ $<
 
 %.o: %.S
-	@echo [mips-CC] $@
+	@echo [$(HINT)-CC] $@
 	@$(CC) $(CFLAGS) $(INCLUDES) -c -o $@ $<
 
 %.o: $(user_dir)/lib.h
@@ -35,9 +35,9 @@ clean:
 	rm ../${TARGET}/*.img
 
 image: $(tools_dir)/fsformat
-	@echo [FS-dd] fs.img
+	@echo [FS-DD] fs.img
 	@dd if=/dev/zero of=../${TARGET}/fs.img bs=4096 count=1024 2>/dev/null
-	@echo [FS-dd] empty.img
+	@echo [FS-DD] empty.img
 	@dd if=/dev/zero of=../${TARGET}/empty.img bs=4096 count=1024 2>/dev/null
 	@$(tools_dir)/fsformat ../${TARGET}/fs.img \
 		$$(printf '%s\n' $(FSIMGFILES) | awk -F/ '{ ns[$$NF]=$$0 } END { for (n in ns) { print ns[n] } }')

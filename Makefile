@@ -8,7 +8,7 @@ else
 	TARGET = target/user
 endif
 
-export CC CFLAGS LD LDFLAGS SHARE_LIB_OBJ TARGET
+export CC CFLAGS LD LDFLAGS SHARE_LIB_OBJ TARGET HINT
 
 .PHONY: mkdir user fs tools clean fs-image
 
